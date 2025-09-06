@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mantenimiento Black.Net - Diagnóstico</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 15px rgba(255,0,0,0.4);
+      text-align: center;
+    }
+
+    .logo {
+      width: 120px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff0000;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 8px;
+      background: #2a2a2a;
+      color: #fff;
+    }
+
+    input[type="submit"] {
+      background: #ff0000;
+      color: white;
+      font-weight: bold;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    input[type="submit"]:hover {
+      background: #cc0000;
+    }
+
+    .resultado {
+      margin-top: 20px;
+      padding: 15px;
+      background: #222;
+      border-radius: 8px;
+      box-shadow: inset 0 0 8px rgba(255,0,0,0.4);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo arriba -->
+    <img src="c:\Users\paula1508\Downloads\WhatsApp Image 2025-09-04 at 8.45.43 PM.jpeg" alt="contacto tecnico" class="logo">
+
+    <h1>Diagnóstico Black.Net</h1>
+    <form id="diagnosticoForm">
+      <label for="nombre">Nombre del cliente:</label>
+      <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" required>
+
+      <label for="equipo">Tipo de equipo:</label>
+      <select id="equipo" name="equipo">
+        <option>Computador de escritorio</option>
+        <option>Portátil</option>
+        <option>Celular</option>
+      </select>
+
+      <label for="problema">Describa el problema:</label>
+      <textarea id="problema" name="problema" rows="4" placeholder="Ej: El computador no enciende, pantalla azul, ruido en ventilador..." required></textarea>
+
+      <input type="submit" value="Generar Diagnóstico">
+    </form>
+
+    <div id="resultado" class="resultado" style="display:none;"></div>
+
+    <div class="footer">
+      © 2025 MANTENIMIENTO BLACK.NET
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("diagnosticoForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const problema = document.getElementById("problema").value.toLowerCase();
+      let diagnostico = "No se pudo generar un diagnóstico claro. Requiere revisión técnica.";
+
+      if (problema.includes("no enciende")) {
+        diagnostico = "Posible problema de fuente de poder, batería o placa base.";
+      } else if (problema.includes("pantalla azul")) {
+        diagnostico = "Error crítico del sistema operativo o memoria RAM defectuosa.";
+      } else if (problema.includes("lento")) {
+        diagnostico = "Puede deberse a disco duro dañado, falta de memoria RAM o exceso de programas.";
+      } else if (problema.includes("ruido")) {
+        diagnostico = "Posible fallo en ventilador o sobrecalentamiento del equipo.";
+      } else if (problema.includes("internet")) {
+        diagnostico = "Revisar configuración de red, drivers o hardware de conexión.";
+      } else if (problema.includes("batería")) {
+        diagnostico = "La batería puede estar agotada o dañada, se recomienda reemplazo.";
+      }
+
+      document.getElementById("resultado").style.display = "block";
+      document.getElementById("resultado").innerHTML = `<strong>Diagnóstico preliminar:</strong><br>${diagnostico}`;
+    });
+  </script>
+</body>
+</html>
