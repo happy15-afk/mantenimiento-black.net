@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -7,7 +7,8 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #111;
+      background: url("logo.jpg") no-repeat center center fixed;
+      background-size: cover; /* imagen cubre toda la pantalla */
       color: #fff;
       margin: 0;
       padding: 0;
@@ -18,18 +19,13 @@
     }
 
     .container {
-      background: #1c1c1c;
+      background: rgba(0, 0, 0, 0.8); /* negro con transparencia */
       padding: 20px;
       border-radius: 12px;
       width: 90%;
       max-width: 500px;
       box-shadow: 0 0 15px rgba(255,0,0,0.4);
       text-align: center;
-    }
-
-    .logo {
-      width: 120px;
-      margin-bottom: 10px;
     }
 
     h1 {
@@ -74,6 +70,7 @@
       background: #222;
       border-radius: 8px;
       box-shadow: inset 0 0 8px rgba(255,0,0,0.4);
+      display: none;
     }
 
     .footer {
@@ -93,6 +90,21 @@
     .qr img {
       width: 150px;
       height: 150px;
+    }
+
+    /* Botón reiniciar */
+    .reset-btn {
+      margin-top: 10px;
+      background: #444;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .reset-btn:hover {
+      background: #666;
     }
   </style>
 </head>
@@ -116,13 +128,15 @@
       <input type="submit" value="Generar Diagnóstico">
     </form>
 
-    <div id="resultado" class="resultado" style="display:none;"></div>
+    <div id="resultado" class="resultado"></div>
 
     <!-- Código QR al final -->
     <div id="qr" class="qr">
       <p>Escanea este código para comunicarte con el técnico:</p>
       <img src="codigo QR.jpg" alt="Contacto técnico">
     </div>
+
+    <button onclick="resetForm()" class="reset-btn">Reiniciar Formulario</button>
 
     <div class="footer">
       © 2025 MANTENIMIENTO BLACK.NET
@@ -133,7 +147,10 @@
     document.getElementById("diagnosticoForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
+      const nombre = document.getElementById("nombre").value;
+      const equipo = document.getElementById("equipo").value;
       const problema = document.getElementById("problema").value.toLowerCase();
+
       let diagnostico = "No se pudo generar un diagnóstico claro. Requiere revisión técnica.";
 
       if (problema.includes("no enciende")) {
@@ -148,19 +165,32 @@
         diagnostico = "Revisar configuración de red, drivers o hardware de conexión.";
       } else if (problema.includes("batería")) {
         diagnostico = "La batería puede estar agotada o dañada, se recomienda reemplazo.";
+      } else if (problema.includes("virus")) {
+        diagnostico = "El sistema puede estar infectado con malware, se recomienda limpieza.";
+      } else if (problema.includes("no carga")) {
+        diagnostico = "Problema con puerto de carga o cargador defectuoso.";
       }
 
       document.getElementById("resultado").style.display = "block";
-      document.getElementById("resultado").innerHTML = `<strong>Diagnóstico preliminar:</strong><br>${diagnostico}`;
+      document.getElementById("resultado").innerHTML = `
+        <strong>Cliente:</strong> ${nombre}<br>
+        <strong>Equipo:</strong> ${equipo}<br>
+        <strong>Diagnóstico preliminar:</strong><br>${diagnostico}
+      `;
 
-      // Mostrar QR solo si requiere contacto con técnico
       if (diagnostico.includes("Requiere revisión técnica") || diagnostico.includes("crítico")) {
         document.getElementById("qr").style.display = "block";
       } else {
         document.getElementById("qr").style.display = "none";
       }
     });
+
+    // Botón para limpiar formulario
+    function resetForm() {
+      document.getElementById("diagnosticoForm").reset();
+      document.getElementById("resultado").style.display = "none";
+      document.getElementById("qr").style.display = "none";
+    }
   </script>
 </body>
 </html>
-
